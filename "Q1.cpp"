@@ -1,0 +1,125 @@
+#include<iostream>
+using namespace std;
+struct node
+{
+   public:
+   int data;
+   node *parent,*left,*right;
+   node()
+   {
+   	
+      parent=NULL;
+      left=NULL;
+      right=NULL;
+  
+   }
+};
+
+class Btree
+{
+   public:
+   node* root=NULL;
+   int count=1;
+   int lcount=0;
+
+
+void insert(node* val, int data)
+{ 
+   node* temp=new node;
+   temp->data=data;
+   if(root==NULL)
+   {
+     root=temp;
+   }
+   else
+   {
+   if(val->data>=data)
+   {
+     if(val->left!=NULL)
+     {
+       insert(val->left,data);
+     }
+     else
+     {
+        val->left=temp;
+        temp->parent=val;
+     }
+   }  
+   else
+   {
+     if(val->right!=NULL)
+     { 
+       insert(val->right, data);
+     }
+     else
+     {
+       val->right=temp;
+       temp->parent=val;
+     } 
+   }
+ }
+}
+
+
+
+
+int countn(node* val)
+{ 
+            if(val==NULL)
+            	return 0;
+	else if(val!=NULL)
+	{
+	if(val->left!=NULL)
+	{
+            	count=count+1;
+            	count=countn(val->left);
+	}
+	if(val->right!=NULL)
+	{
+            	count=count+1;
+	           count=countn(val->right);
+	}
+	}
+	         
+	            return count;
+	          }
+	          
+int countNodes(node *val){
+	count = 1;
+	return countn(val);
+}
+
+// leaf count code !!
+	 int leafc(node* val)
+	 { 
+	 if(val==NULL)
+	 return 0;
+	 else if(val->left!=NULL || val-> right!=NULL)
+	 return 1;
+	 else 
+	 lcount++;
+	 return lcount;
+	 }
+	 	
+	 	
+	 
+	};
+	
+
+int main()
+{
+	int count;
+	Btree BT;
+      BT.	insert(BT.root,30);
+      BT.      insert(BT.root,20);
+      BT.      insert(BT.root,40);
+      BT.      insert(BT.root,70);
+      BT.      insert(BT.root,60);
+      BT.      insert(BT.root,80);
+      
+      cout<<"total no of node " <<BT.countNodes(BT.root);
+      cout<<"\ntotal no of leaf node " << BT.leafc(BT.root);
+      cout<<"\ntotal no of internal node "<<(BT.countNodes(BT.root)-BT.leafc(BT.root));
+      return 0;
+	
+}
